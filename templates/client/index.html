@@ -1,0 +1,55 @@
+{% extends "client/templates/app.html" %}
+{% block content %}
+
+<div class="card shadow mb-4">
+        <!-- Content Row -->
+        <div class="row">
+            <div class="card-body">
+                <div class="card-group">
+                    <div class="card">
+                      <img class="card-img-top" src="{{ url_for('video_feed') }}" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Camera - P2</h5>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <img class="card-img-top" src="{{ url_for('video_feed') }}" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Camera - P3</h5>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <img class="card-img-top" src="{{ url_for('video_feed') }}" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Camera - L1</h5>
+                      </div>
+                    </div>
+                </div>
+                <div class="card-group">
+                    <div class="card">
+                      <img class="card-img-top" src="{{ url_for('video_feed') }}" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Camera - L2</h5>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <img class="card-img-top" src="{{ url_for('video_feed') }}" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Camera - L3</h5>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <img class="card-img-top" src="{{ url_for('video_feed') }}" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Camera - L5</h5>
+                      </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <!-- Content Row -->             
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+{% endblock %}
