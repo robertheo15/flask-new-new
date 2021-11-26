@@ -4,3 +4,4 @@ pip install opencv-python
 pip install pymongo
 pip install python-dotenv
 pip install colorama
+pip install passlib
