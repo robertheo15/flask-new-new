@@ -11,7 +11,7 @@ class Admin:
             "_id": uuid.uuid4().hex,
             "name": request.form.get('name'),
             "email": request.form.get('email'),
-            "jabatan": request.form.get('jabatan'),
+            "password": request.form.get('password'),
         }
 
         #Check for existing email address

@@ -27,6 +27,7 @@ db = client.user_login_system
 #     return wrap
 # Routes
 
+data = ''
 
 #camera
 
@@ -78,12 +79,16 @@ def gen_frames(camera_id):
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
 
-from admin import routes
+from controllers.admin import routes
+from controllers.user import routes
 
 @app.route("/")
 def home():
     # return render_template('user/index.html')
     return loginUser()
+
+def loginUser():
+    return render_template('user/login.html')
 
 @app.route("/loginadmin/")
 def loginAdmin():
@@ -94,13 +99,9 @@ def admin():
     # return render_template("admin/index.html")
     return render_template("admin/user.html")
 
-@app.route("/loginclient/")
-def loginClient():
-    return render_template('client/login.html')
-
-@app.route("/loginuser/")
-def loginUser():
-    return render_template('user/login.html')
+# @app.route("/loginclient/")
+# def loginClient():
+#     return render_template('client/login.html')
 
 @app.route("/forgot-password/")
 def forgetPassword():
@@ -108,8 +109,8 @@ def forgetPassword():
 
 @app.route("/user/")
 def user():
-    from admin.models import Admin
-    users = Admin().getAdmin()
+    from controllers.user.models import User
+    users = User().getUser()
     return render_template("user/user.html", myUsers=users)
 
 @app.route("/client/")
@@ -124,3 +125,13 @@ def video_feed(list_id):
 @app.errorhandler(404)
 def notFound(e):
     return render_template('admin/404.html'), 404
+
+
+def attendance():
+    attendance = []
+    return attendance
+
+def transactional():
+    session['transactional'] = data
+    transactional = session['transactional'] 
+    return transactional
