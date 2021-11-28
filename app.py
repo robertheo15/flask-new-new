@@ -127,11 +127,12 @@ def notFound(e):
     return render_template('admin/404.html'), 404
 
 
-def attendance():
-    attendance = []
+def sessionAttendance():
+    session['attendance'] = data
+    attendance = session['attendance'] 
     return attendance
 
-def transactional():
+def sessionTransactional():
     session['transactional'] = data
     transactional = session['transactional'] 
     return transactional
