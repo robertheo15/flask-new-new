@@ -34,8 +34,7 @@ data = ''
 # list of camera accesses
 cameras = [
  0,
- 1,
- 2
+ 1
   ]
 
 def find_camera(list_id):
@@ -65,15 +64,15 @@ def gen_frames(camera_id):
         _, frame = vid.read()
         height, width = frame.shape[:2]
         if count == 0:
-            frame, boxes, confidences, classids, idxs = infer_image(net, layer_names,
-                                                                    height, width, frame, colors, labels)
+            frame, boxes, confidences, classids, idxs= infer_image(net, layer_names,
+                                                                    height, width, frame, colors, labels, cam)
             count += 1
         else:
             frame, boxes, confidences, classids, idxs = infer_image(net, layer_names,
-                                                                    height, width, frame, colors, labels, boxes, confidences, classids, idxs, infer=False)
+                                                                    height, width, frame, colors, labels, cam, boxes, confidences, classids, idxs, infer=False)
             count = (count + 1) % 6
-        # cv2.imshow('webcam', frame)
 
+        # cv2.imshow('webcam', frame)
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result

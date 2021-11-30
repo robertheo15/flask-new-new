@@ -4,6 +4,7 @@ import cv2 as cv
 import subprocess
 import time
 import os
+from datetime import datetime
 
 
 def show_image(img):
@@ -12,6 +13,8 @@ def show_image(img):
 
 
 def draw_labels_and_boxes(img, boxes, confidences, classids, idxs, colors, labels):
+
+   
     # If there are any detections
     if len(idxs) > 0:
         for i in idxs.flatten():
@@ -27,11 +30,12 @@ def draw_labels_and_boxes(img, boxes, confidences, classids, idxs, colors, label
             text = "{}: {:4f}".format(labels[classids[i]], confidences[i])
             cv.putText(img, text, (x, y-5),
                        cv.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-
+            
+            
     return img
 
 
-def generate_boxes_confidences_classids(outs, height, width, tconf):
+def generate_boxes_confidences_classids(outs, height, width, tconf, labels, camid):
     boxes = []
     confidences = []
     classids = []
@@ -62,10 +66,15 @@ def generate_boxes_confidences_classids(outs, height, width, tconf):
                 confidences.append(float(confidence))
                 classids.append(classid)
 
+
+                # Ambil Data dari sini bet!!
+                print("Class: " + labels[classid] + " Cam : "  +  str(camid) + " Time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    
+
     return boxes, confidences, classids
 
 
-def infer_image(net, layer_names, height, width, img, colors, labels,
+def infer_image(net, layer_names, height, width, img, colors, labels, camid,
                 boxes=None, confidences=None, classids=None, idxs=None, infer=True):
 
     if infer:
@@ -81,12 +90,9 @@ def infer_image(net, layer_names, height, width, img, colors, labels,
         outs = net.forward(layer_names)
         end = time.time()
 
-        if False:  # showtime
-            print("[INFO] YOLOv3 took {:6f} seconds".format(end - start))
-
         # Generate the boxes, confidences, and classIDs
         boxes, confidences, classids = generate_boxes_confidences_classids(
-            outs, height, width, 0.5)
+            outs, height, width, 0.5, labels, camid)
 
         # Apply Non-Maxima Suppression to suppress overlapping bounding boxes Threshold & Confidence
         idxs = cv.dnn.NMSBoxes(boxes, confidences, 0.5,  0.3)
@@ -97,5 +103,9 @@ def infer_image(net, layer_names, height, width, img, colors, labels,
     # Draw labels and boxes on the image
     img = draw_labels_and_boxes(
         img, boxes, confidences, classids, idxs, colors, labels)
+    
+    # if True:  # showtime
+    #     # print("[INFO] YOLOv3 took {:6f} seconds".format(end - start))
+    #     print(labels)
 
     return img, boxes, confidences, classids, idxs
