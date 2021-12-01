@@ -136,11 +136,10 @@ def sessionTransactional():
     transactional = session['transactional'] 
     return transactional
 
-@app.route('/test/')
-def test():
+
+def setSession():
     from yolo_utils import data
     session['location'] = data['location']
     session['name'] = data['name']
     session['time'] = data['time']
-    # print(session)
-    return data
+    return session
