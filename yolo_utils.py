@@ -1,3 +1,4 @@
+from flask import Flask, render_template, session, redirect, Response
 import numpy as np
 import argparse
 import cv2 as cv
@@ -66,7 +67,11 @@ def generate_boxes_confidences_classids(outs, height, width, tconf, labels, cami
                 confidences.append(float(confidence))
                 classids.append(classid)
 
+                session['name'] = labels[classid]
+                session['location'] = str(camid)
+                session['time'] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
+                Attendance.setAttendance()
                 # Ambil Data dari sini bet!!
                 print("Class: " + labels[classid] + " Cam : "  +  str(camid) + " Time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     

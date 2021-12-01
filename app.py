@@ -135,3 +135,7 @@ def sessionTransactional():
     session['transactional'] = data
     transactional = session['transactional'] 
     return transactional
+    
+@app.route('/test/')
+def test():
+    return session
