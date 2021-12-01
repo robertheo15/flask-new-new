@@ -26,7 +26,7 @@ db = client.user_login_system
        
 #     return wrap
 # Routes
- 
+
 data = ''
 
 #camera
@@ -39,6 +39,7 @@ cameras = [
 
 def find_camera(list_id):
     return cameras[int(list_id)]
+
 
 def gen_frames(camera_id):
     cam = find_camera(camera_id)  # return the camera access link with credentials. Assume 0?
@@ -125,16 +126,12 @@ def notFound(e):
     return render_template('admin/404.html'), 404
 
 
-# def sessionAttendance():
-#     session['attendance'] = data
-#     attendance = session['attendance'] 
-#     return attendance
+def sessionAttendance():
+    session['attendance'] = data
+    attendance = session['attendance'] 
+    return attendance
 
-# def sessionTransactional():
-#     session['transactional'] = data
-#     transactional = session['transactional'] 
-#     return transactional
-
-@app.route('/test/')
-def test():
-    return session
+def sessionTransactional():
+    session['transactional'] = data
+    transactional = session['transactional'] 
+    return transactional

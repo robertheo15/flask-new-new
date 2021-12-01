@@ -25,7 +25,7 @@ class Attendance:
                         "email": "test",
                         "status": "Hadir",
                         "datetime": today,
-                        "late": False
+                        "late": false
                     })
                     return jsonify(attendance), 200
 
@@ -35,7 +35,7 @@ class Attendance:
                         "email": "test",
                         "status": "Hadir",
                         "datetime": today,
-                        "late": False
+                        "late": false
                     })
                     return jsonify(attendance), 200    
 
@@ -58,7 +58,7 @@ class Attendance:
                 }
 
                 if now > timeOut: 
-                    attendance = db.attendance.find_one_and_update({"email": data['email']}, { '$set': update } )
+                    attendance = db.attendance.find_one_and_update({"email": attendance['email']}, { '$set': update } )
                 return jsonify(attendance), 200
 
         return jsonify({"msg":"data doesn't exist"}), 400
