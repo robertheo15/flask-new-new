@@ -35,7 +35,7 @@ def draw_labels_and_boxes(img, boxes, confidences, classids, idxs, colors, label
     return img
 
 data = {
-    "name" : "",
+    "email" : "",
     "location" : "",
     "time" : "",
 }
@@ -72,15 +72,12 @@ def generate_boxes_confidences_classids(outs, height, width, tconf, labels, cami
                 confidences.append(float(confidence))
                 classids.append(classid)
 
-                data['name'] = labels[classid]
+                data['email'] = labels[classid]
                 data['location'] = str(camid)
                 data['time'] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-                # Attendance.setAttendance()
                 # Ambil Data dari sini bet!!
-                print("Class: " + labels[classid] + " Cam : "  +  str(camid) + " Time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-    
-
+                # print("Class: " + labels[classid] + " Cam : "  +  str(camid) + " Time: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
     return boxes, confidences, classids
 
 

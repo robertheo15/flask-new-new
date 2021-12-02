@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, redirect
 from app import app
 from controllers.admin.models import Admin
+from controllers.attendance.models import Attendance
 
 @app.route("/admin/user/")
 def adminUser():
@@ -22,12 +23,13 @@ def deleteAdmin(id):
        
 @app.route("/admin/absensi/")
 def absensi():
-    return render_template('admin/absensi.html')
+    reports = Attendance().getReport()
+    return render_template('admin/absensi.html', myReports = reports)
 
 @app.route("/admin/report/")
 def report():
-    reports = Admin().getReport()
-    return render_template('admin/report.html', myReports=reports)
+    reports = Attendance().getReport()
+    return render_template('admin/report.html', myReports = reports)
 
 @app.route('/admin/signout')
 def signout():

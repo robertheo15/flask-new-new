@@ -12,32 +12,50 @@ class Attendance:
         timeOut = now.replace(hour=17, minute=0, second=0, microsecond=0)
 
         data = db.attendance.find_one({"email": session['email']})
-        today = date.today()
+        today = datetime.today()
 
-        # check if data exist
-        if data:
-            # if data exist check data's date compare to today's, if not equal create new document 
-            if today > data['datetime']:
+        # # check if data exist
+        # if data:
+        #     # if data exist check data's date compare to today's, if not equal create new document 
+        #     if today > data['datetime']:
 
-                if now < timeIn:  
-                    attendance = db.attendance.insert_one({
+        #         if now < timeIn:  
+        #             attendance = db.attendance.insert_one({
+        #                 "_id": uuid.uuid4().hex,
+        #                 "email": session['email'],
+        #                 "status": "Hadir",
+        #                 "datetime": today,
+        #                 "late": False
+        #             })
+        #             return redirect('/user/')
+
+        #         if now > timeIn and now < timeOut:  
+        #             attendance = db.attendance.insert_one({
+        #                 "_id": uuid.uuid4().hex,
+        #                 "email": session['email'],
+        #                 "status": "Terlambat",
+        #                 "datetime": today,
+        #                 "late": True
+        #             })
+        #             return redirect('/user/') 
+
+        #         if now > timeIn and now > timeOut:  
+        #             attendance = db.attendance.insert_one({
+        #                 "_id": uuid.uuid4().hex,
+        #                 "email": session['email'],
+        #                 "status": "pulang",
+        #                 "datetime": today,
+        #                 "late": False
+        #             })
+        #             return redirect('/user/')
+        attendance = db.attendance.insert_one({
                         "_id": uuid.uuid4().hex,
-                        "email": "test",
-                        "status": "Hadir",
+                        "email": session['email'],
+                        "status": "pulang",
                         "datetime": today,
-                        "late": false
+                        "late": False
                     })
-                    return jsonify(attendance), 200
-
-                if now > timeIn:  
-                    attendance = db.attendance.insert_one({
-                        "_id": uuid.uuid4().hex,
-                        "email": "test",
-                        "status": "Hadir",
-                        "datetime": today,
-                        "late": false
-                    })
-                    return jsonify(attendance), 200    
+        return redirect('/user/') 
 
     def updateAttendance(self):
         # rule for timeIn and timeOut
