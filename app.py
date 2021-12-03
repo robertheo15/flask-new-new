@@ -52,6 +52,7 @@ def gen_frames(camera_id):
     # Get the output layer names of the model
     layer_names = net.getLayerNames()
     
+    # robert
     # outputLayers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
     outputLayers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
     # Infer real-time on webcam
