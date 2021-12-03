@@ -51,7 +51,9 @@ def gen_frames(camera_id):
     net = cv2.dnn.readNetFromDarknet("./yolov3-coco/yolov3.cfg", "./yolov3-coco/yolov3.weights")
     # Get the output layer names of the model
     layer_names = net.getLayerNames()
-    outputLayers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
+    
+    # outputLayers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
+    outputLayers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
     # Infer real-time on webcam
     count = 0
     vid = cv2.VideoCapture(cam)
