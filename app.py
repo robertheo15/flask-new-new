@@ -44,17 +44,22 @@ def gen_frames(camera_id):
     # cam = cameras[int(id)]
 
     # Get the labels
+    # labels = open("./yolov3-coco/face-labels").read().strip().split("\n")
     labels = open("./yolov3-coco/coco-labels").read().strip().split("\n")
     # Intializing colors to represent each label uniquely
     colors = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
+
     # Load the weights and configutation to form the pretrained YOLOv3 model
+    # net = cv2.dnn.readNetFromDarknet("./yolov3-coco/yolov4.cfg", "./yolov3-coco/yolov4.weights")
     net = cv2.dnn.readNetFromDarknet("./yolov3-coco/yolov3.cfg", "./yolov3-coco/yolov3.weights")
+
+    # net = cv2.dnn_DetectionModel("./yolov3-coco/yolov4-custom5.cfg", "./yolov3-coco/yolov4.weights")
     # Get the output layer names of the model
     layer_names = net.getLayerNames()
     
     # robert
-    # outputLayers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
-    outputLayers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+    outputLayers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
+    # outputLayers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
     # Infer real-time on webcam
     count = 0
     vid = cv2.VideoCapture(cam)
