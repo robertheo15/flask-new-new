@@ -82,9 +82,8 @@ def gen_frames(camera_id):
         frame = buffer.tobytes()
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
-from yolo_utils import data
-
 from controllers.attendance.models import Attendance
+from controllers.transactional.models import Transactional
 
 # Routes
 from controllers.admin import routes
@@ -92,8 +91,9 @@ from controllers.user import routes
 
 @app.route("/")
 def home():
-    test = setSession()
-    return render_template('user/index.html', session=test)
+    return loginUser()
+    # test = setSession()
+    # return render_template('user/index.html', session=test)
 
 def loginUser():
     return render_template('user/login.html')
@@ -104,7 +104,6 @@ def loginAdmin():
 
 @app.route("/admin/")
 def admin():
-    test = setSession()
     return render_template("admin/user.html")
 
 # @app.route("/loginclient/")
@@ -122,13 +121,12 @@ def user():
     users = User().getUser()
     setSession()
     Attendance().setAttendance()
+    # Transactional().setTransactional()
+    data = ""
     return render_template("user/user.html", myUsers = users)
 
 @app.route("/client/")
 def client():
-    # session['location'] = data['location']
-    # session['name'] = data['email']
-    # session['time'] = data['time']
     return render_template("client/index.html", camera_list=len(cameras), camera=cameras)
 
 @app.route('/video_feed/<string:list_id>/', methods=["GET"])
@@ -151,9 +149,15 @@ def sessionTransactional():
     transactional = session['transactional'] 
     return transactional
 
+@app.route('/test/')
 def setSession():
-    # from yolo_utils import data
+    from yolo_utils import data
     session['location'] = data['location']
     session['email'] = data['email']
     session['time'] = data['time']
     return session
+
+def clearData():
+    from yolo_utils import data
+    data =""
+    return data

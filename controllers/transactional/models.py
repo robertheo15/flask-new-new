@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, date
 from flask import Flask, jsonify, request, session, redirect
 from passlib.hash import pbkdf2_sha256
 from app import db
@@ -7,16 +8,27 @@ import uuid
 class Transactional:
     def setTransactional(self):
         now = datetime.now()
-        today = date.today()
+        today = datetime.today()
 
         # create the transactional object
         transactional = {
             "_id": uuid.uuid4().hex,
             "email": session['email'],
-            "location": "lobi",
-            "date": today,
-            "time": now
+            "location": session['location'],
+            "datetime": today,
         }
+
+        # if session['email'] == "":
+        #     return redirect('/user/') 
+        # else:
+        #     transactional = db.transactional.insert_one({
+        #                         "_id": uuid.uuid4().hex,
+        #                             "email": session['email'],
+        #                             "location": session['location'],
+        #                             "date": today,
+        #                             "time": now
+        #                         })
+        #     return redirect('/user/') 
 
         data = db.attendance.find_one({"email": session['email']})
         # check if data exist
@@ -24,45 +36,32 @@ class Transactional:
             # if data exist check data's date compare to today's, if not equal create new document 
             if today > data['datetime']:
 
-                # if now > data['time']:  
-                #     attendance = db.attendance.insert_one({
-                #         "_id": uuid.uuid4().hex,
-                #         "email": session['email'],
-                #         "location": "lobi",
-                #         "date": today,
-                #         "time": now
-                #         })
-                #     return jsonify(attendance), 200
+                if now < data['datetime']:   
+                    transactional = db.transactional.insert_one({
+                        "_id": uuid.uuid4().hex,
+                        "email": session['email'],
+                        "location": session['location'],
+                        "datetime": today,
+                        }) 
+                    return redirect('/user/')
 
-                # if now > timeIn:  
-                #     attendance = db.attendance.insert_one({
-                #         "_id": uuid.uuid4().hex,
-                #         "email": session['email'],
-                #         "location": "lobi",
-                #         "date": today,
-                #         "time": now
-                #     })
-                #     return jsonify(attendance), 200    
-
-                attendance = db.attendance.insert_one({
+                transactional = db.transactional.insert_one({
                        "_id": uuid.uuid4().hex,
                         "email": session['email'],
-                        "location": "lobi",
-                        "date": today,
-                        "time": now
+                        "location": session['location'],
+                        "datetime": today,
                     })
-                return jsonify(attendance), 200
+                return redirect('/user/')
                 
-            attendance = db.attendance.insert_one({
+                
+            transactional = db.transactional.insert_one({
                        "_id": uuid.uuid4().hex,
                         "email": session['email'],
-                        "location": "lobi",
-                        "date": today,
-                        "time": now
+                        "location": session['location'],
+                        "datetime": today,
                     })
-            return jsonify(attendance), 200    
-        else:        
-            return jsonify({"msg":"data doesn't exist"}), 400
+            return redirect('/user/')
+             
    
 
     def updateTransactional(self):
