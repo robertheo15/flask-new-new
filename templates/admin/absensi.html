@@ -35,17 +35,15 @@
                                 <td>{{ loop.index }}</td>
                                 <td>{{ report['email'] }}</td>
                                 <td>{{ report['status'] }}</td>
-                                <td>{{ report['datetime'].strftime("%d/%m/%Y %H:%M:%S") }}</td>
-                                <td>{{ report['datetime'].strftime("%d/%m/%Y %H:%M:%S") }}</td>
+                                <td>{{ report['timeIn'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                {% if report['timeOut'] == "" %}
+                                    <td>--</td>
+                                {% endif %}
+                                {% if report['timeOut'] != "" %}
+                                    <td>{{ report['timeOut'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                {% endif %}
                             </tr>
-                            {% endfor %}   
-                                <!-- <tr>
-                                    <td>20190012</td>
-                                    <td>Robert</td>
-                                    <td class="text-success">Hadir</td>
-                                    <td>08:15:59</td>
-                                    <td>17:05:59</td>
-                                </tr> -->
+                            {% endfor %}                              
                         </tbody>
                     </table>
                 </div>

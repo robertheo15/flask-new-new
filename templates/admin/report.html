@@ -23,6 +23,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Lokasi</th>
                                 <th>Status</th>
                                 <th>Jam Datang</th>
                                 <th>Jam Pulang</th>
@@ -33,11 +34,17 @@
                             <tr>
                                 <td>{{ loop.index }}</td>
                                 <td>{{ report['email'] }}</td>
+                                <td>{{ report['location'] }}</td>
                                 <td>{{ report['status'] }}</td>
-                                <td>{{ report['datetime'].strftime("%d/%m/%Y %H:%M:%S") }}</td>
-                                <td>{{ report['datetime'].strftime("%d/%m/%Y %H:%M:%S") }}</td>
+                                <td>{{ report['timeIn'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                {% if report['timeOut'] == "" %}
+                                    <td>--</td>
+                                {% endif %}
+                                {% if report['timeOut'] != "" %}
+                                    <td>{{ report['timeOut'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                {% endif %}
                             </tr>
-                            {% endfor %}     
+                            {% endfor %} 
                         </tbody>
                     </table>
                 </div>

@@ -22,36 +22,49 @@ class Attendance:
                 if now < timeIn:  
                     attendance = db.attendance.insert_one({
                         "_id": uuid.uuid4().hex,
-                        "email": session['email'],
-                        "status": "Hadir",
-                        "timeIn": today,
-                        "timeOut": "",
-                        "late": False
+                        "email" : session['email'],
+                        "status" : "Hadir",
+                        "location": session['location'],
+                        "timeIn" : today,
+                        "timeOut" : "",
+                        "late" : False
                     })
                     return redirect('/user/')
                 if now > timeIn and now <= timeOut:  
                     attendance = db.attendance.insert_one({
                         "_id": uuid.uuid4().hex,
-                        "email": session['email'],
-                        "status": "Terlambat",
-                        "timeIn": today,
-                         "timeOut": "",
-                        "late": True
+                        "email" : session['email'],
+                        "status" : "Terlambat",
+                        "location" : session['location'],
+                        "timeIn" : today,
+                         "timeOut" : "",
+                        "late" : True
                     })
                     return redirect('/user/') 
                 if now > timeOut:  
                     update = {
-                    "status": "Pulang",
-                    "timeOut": today
+                    "location": session['location'],    
+                    "status" : "Pulang",
+                    "timeOut" : today
                     }
                     attendance = db.attendance.find_one_and_update({"email": session['email'], "timeOut" : ""}, { '$set': update } )
                     return redirect('/user/')
                 return redirect('/user/')
             elif today.strftime("%d/%m/%Y") == data['timeIn'].strftime("%d/%m/%Y"):
+                if now > timeIn and now < timeOut:
+                    update = {
+                    "location": session['location'],
+                    "status" : "Terlambat",
+                    "timeOut" : today
+                    }
+                    attendance = db.attendance.find_one_and_update({"email": session['email'], "timeOut" : ""}, { '$set': update } )
+                    return redirect('/user/')
+                
                 if now > timeOut:  
                     update = {
-                    "status": "Pulang",
-                    "timeOut": today
+                    "location": session['location'],
+                    "status" : "Pulang",
+                    "timeOut" : today
                     }
                     attendance = db.attendance.find_one_and_update({"email": session['email'], "timeOut" : ""}, { '$set': update } )
                     return redirect('/user/')
@@ -63,22 +76,24 @@ class Attendance:
         else:  
             if now < timeIn:  
                 attendance = db.attendance.insert_one({
-                        "_id": uuid.uuid4().hex,
-                        "email": session['email'],
-                        "status": "Hadir",
-                        "timeIn": today,
-                        "timeOut": "",
-                        "late": False
+                        "_id" : uuid.uuid4().hex,
+                        "email" : session['email'],
+                        "status" : "Hadir",
+                        "location" : session['location'],
+                        "timeIn" : today,
+                        "timeOut" : "",
+                        "late" : False
                     })
                 return redirect('/user/') 
             if now > timeIn and now < timeOut:  
                 attendance = db.attendance.insert_one({
-                        "_id": uuid.uuid4().hex,
-                        "email": session['email'],
-                        "status": "Terlambat",
-                        "timeIn": today,
-                         "timeOut": "",
-                        "late": True
+                        "_id" : uuid.uuid4().hex,
+                        "email" : session['email'],
+                        "status" : "Terlambat",
+                        "location" : session['location'],
+                        "timeIn" : today,
+                         "timeOut" : "",
+                        "late" : True
                     })
                 return redirect('/user/')
             return redirect('/user/')

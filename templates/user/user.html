@@ -13,21 +13,28 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Jabatan</th>
-                                <th>Last Seen At</th>
-                                <th>Updated At</th>
+                                <th>lokasi</th>
+                                <th>Status</th>
+                                <th>Jam Datang</th>
+                                <th>Jam Pulang</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for user in myUsers %}
+                            {% for report in myReports %}
                             <tr>
                                 <td>{{ loop.index }}</td>
-                                <td>{{ user['name'] }}</td>
-                                <td>{{ user['jabatan'] }}</td>
-                                <td>P2(belum)</td>
-                                <td>Monday,26 Juni 2021 14.00(belum)</td>
+                                <td>{{ report['email'] }}</td>
+                                <td>{{ report['location'] }}</td>
+                                <td>{{ report['status'] }}</td>
+                                <td>{{ report['timeIn'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                {% if report['timeOut'] == "" %}
+                                    <td>--</td>
+                                {% endif %}
+                                {% if report['timeOut'] != "" %}
+                                    <td>{{ report['timeOut'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                {% endif %}
                             </tr>
-                            {% endfor %}          
+                            {% endfor %}         
                         </tbody>
                     </table>
                 </div>

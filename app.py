@@ -83,7 +83,6 @@ def gen_frames(camera_id):
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
 from controllers.attendance.models import Attendance
-from controllers.transactional.models import Transactional
 
 # Routes
 from controllers.admin import routes
@@ -115,15 +114,14 @@ def forgetPassword():
     return render_template('admin/forgot-password.html')    
 
 # halo kenneth
-@app.route("/user/")
+@app.route("/absensi/")
 def user():
     from controllers.user.models import User
-    users = User().getUser()
+    reports = Attendance().getReport()
     setSession()
     Attendance().setAttendance()
-    # Transactional().setTransactional()
     data = ""
-    return render_template("user/user.html", myUsers = users)
+    return render_template("user/user.html", myReports = reports)
 
 @app.route("/client/")
 def client():
@@ -138,17 +136,6 @@ def video_feed(list_id):
 def notFound(e):
     return render_template('admin/404.html'), 404
 
-
-def sessionAttendance():
-    session['attendance'] = data
-    attendance = session['attendance'] 
-    return attendance
-
-def sessionTransactional():
-    session['transactional'] = data
-    transactional = session['transactional'] 
-    return transactional
-
 @app.route('/test/')
 def setSession():
     from yolo_utils import data
@@ -156,8 +143,3 @@ def setSession():
     session['email'] = data['email']
     session['time'] = data['time']
     return session
-
-def clearData():
-    from yolo_utils import data
-    data =""
-    return data
