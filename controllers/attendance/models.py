@@ -14,7 +14,8 @@ class Attendance:
 
         data = db.attendance.find_one({"email": session['email'], "timeOut" : ""})
         today = datetime.today()
-
+        if session['email'] == "":
+            return redirect('/user/')
         # check if data exist
         if data:
             # if data exist check data's date compare to today's, if not equal create new document 
@@ -55,7 +56,7 @@ class Attendance:
                     update = {
                     "location": session['location'],
                     "status" : "Terlambat",
-                    "timeOut" : today
+                    "timeOut" : ""
                     }
                     attendance = db.attendance.find_one_and_update({"email": session['email'], "timeOut" : ""}, { '$set': update } )
                     return redirect('/user/')
