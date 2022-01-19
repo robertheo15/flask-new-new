@@ -24,7 +24,12 @@
                             <tr>
                                 <td>{{ loop.index }}</td>
                                 <td>{{ report['email'] }}</td>
-                                <td>{{ report['location'] }}</td>
+                                {% if report['location'] == "0" %}
+                                    <td>Lobby</td>
+                                {% endif %}
+                                {% if report['location'] == "1" %}
+                                    <td>Lt. 5</td>
+                                {% endif %}
                                 <td>{{ report['status'] }}</td>
                                 <td>{{ report['timeIn'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
                                 {% if report['timeOut'] == "" %}
