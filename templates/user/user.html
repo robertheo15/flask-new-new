@@ -22,6 +22,7 @@
                         <tbody>
                             {% for report in myReports %}
                             <tr>
+                                {% if report['timeIn'].strftime("%m/%d/%Y") == today %}
                                 <td>{{ loop.index }}</td>
                                 <td>{{ report['email'] }}</td>
                                 {% if report['location'] == "0" %}
@@ -39,6 +40,7 @@
                                     <td>{{ report['timeOut'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
                                 {% endif %}
                             </tr>
+                            {% endif %}
                             {% endfor %}         
                         </tbody>
                     </table>
