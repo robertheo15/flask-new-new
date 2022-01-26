@@ -5,7 +5,7 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
         <h4 class="m-0 font-weight-bold text-primary">DAFTAR USER</h4>
-        <a class="btn btn-sm btn-primary shadow-sm"  href="{{ url_for('userCreate') }}"><i class="fas fa-user fa-sm text-white-50 mr-2"></i>Add User</a>
+    
     </div>
         <!-- Content Row -->
         <div class="row">
@@ -16,21 +16,23 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Jabatan</th>
-                                <th>Action</th>
+                                <th>Lokasi</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for user in myUsers %}
+                            {% if user['timeIn'].strftime("%m/%d/%Y") == today %}
                             <tr>
                                 <td>{{ loop.index }}</td>
-                                <td>{{ user['name'] }}</td>
-                                <td>{{ user['jabatan'] }}</td>
-                                <td>
-                                    <a href="/admin/delete-admin/{{ user['_id'] }}" class="btn btn-danger mb-1" onclick="return confirm('apakah anda yakin?');"><i class="fas fa-trash-alt"></i></a>
-                                    <a id="" class="btn btn-primary mb-1"><i class="fas fa-pen"></i></a>                                  
-                                </td>
+                                <td>{{ user['email'] }}</td>             
+                                {% if user['location'] == "0" %}
+                                    <td>Lobby</td>
+                                {% endif %}
+                                {% if user['location'] == "1" %}
+                                    <td>Lt. 5</td>
+                                {% endif %}   
                             </tr>
+                            {% endif %}
                             {% endfor %}          
                         </tbody>
                     </table>

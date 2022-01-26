@@ -15,20 +15,7 @@ app.secret_key = b'4\xc2\xe9G\xd8}\xae\x93\xcd\xdb\xeae\xf5\xda\xc4\xc2'
 client = pymongo.MongoClient('localhost',27017)
 db = client.user_login_system
 
-#Decorators 
-# def loginRequired(f):
-#     @wraps(f)
-#     def wrap(*args, **kwargs):
-#         if 'logged_in' in session:
-#             return f(*args,**kwargs)
-#         else:
-#             return redirect('/')
-       
-#     return wrap
-
-
 #camera
-
 # list of camera accesses
 cameras = [
  0,
@@ -86,42 +73,18 @@ from controllers.attendance.models import Attendance
 
 # Routes
 from controllers.admin import routes
-from controllers.user import routes
 
 @app.route("/")
 def home():
-    return loginUser()
-    # test = setSession()
-    # return render_template('user/index.html', session=test)
-
-def loginUser():
-    return render_template('user/login.html')
-
-@app.route("/loginadmin/")
-def loginAdmin():
-    return render_template('admin/login.html')
-
-@app.route("/admin/")
-def admin():
-    return render_template("admin/user.html")
-
-# @app.route("/loginclient/")
-# def loginClient():
-#     return render_template('client/login.html')
-
-@app.route("/forgot-password/")
-def forgetPassword():
-    return render_template('admin/forgot-password.html')    
-
-# halo kenneth
-@app.route("/absensi/")
-def user():
-    from controllers.user.models import User
     reports = Attendance().getReport()
     setSession()
     Attendance().setAttendance()
     data = ""
     return render_template("user/user.html", myReports = reports)
+
+@app.route("/admin/")
+def admin():
+    return render_template("admin/user.html")
 
 @app.route("/client/")
 def client():
