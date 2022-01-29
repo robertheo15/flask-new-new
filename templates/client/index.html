@@ -12,7 +12,7 @@
                     <div class="card">
                       <img class="card-img-top" src="{{ url_for('video_feed', list_id=camera_number) }}" alt="Card image cap">
                       <div class="card-body">
-                        <h5 class="card-title">Camera - P2</h5>
+                        <h5 class="card-title">Camera - {{ camera_number }} </h5>
                       </div>
                     </div>
                   {% endfor %}
