@@ -79,8 +79,10 @@ def home():
     reports = Attendance().getReport()
     setSession()
     Attendance().setAttendance()
+    from datetime import datetime, timedelta, date
     data = ""
-    return render_template("user/user.html", myReports = reports)
+    today = datetime.today().strftime("%d/%m/%Y")
+    return render_template("user/user.html", myReports = reports, today = today)
 
 @app.route("/admin/")
 def admin():

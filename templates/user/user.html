@@ -22,7 +22,7 @@
                         <tbody>
                             {% for report in myReports %}
                             <tr>
-                                {% if report['timeIn'].strftime("%m/%d/%Y") == today %}
+                                {% if report['timeIn'].strftime("%d/%m/%Y") == today %}
                                 <td>{{ loop.index }}</td>
                                 <td>{{ report['email'] }}</td>
                                 {% if report['location'] == "0" %}
@@ -32,12 +32,12 @@
                                     <td>Lt. 5</td>
                                 {% endif %}
                                 <td>{{ report['status'] }}</td>
-                                <td>{{ report['timeIn'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                <td>{{ report['timeIn'].strftime("%d/%m/%Y, %H:%M:%S") }}</td>
                                 {% if report['timeOut'] == "" %}
                                     <td>--</td>
                                 {% endif %}
                                 {% if report['timeOut'] != "" %}
-                                    <td>{{ report['timeOut'].strftime("%m/%d/%Y, %H:%M:%S") }}</td>
+                                    <td>{{ report['timeOut'].strftime("%d/%m/%Y, %H:%M:%S") }}</td>
                                 {% endif %}
                             </tr>
                             {% endif %}
